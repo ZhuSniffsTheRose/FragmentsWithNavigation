@@ -8,6 +8,18 @@
     android:background="#00BCD4"
     tools:context=".SecondFragment">
 
+
+    <TextView
+        android:id="@+id/welcomeWithNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Hello Andy!" />
+
     <Button
         android:id="@+id/second_btn"
         android:layout_width="wrap_content"
@@ -16,6 +28,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/welcomeWithNameTv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
