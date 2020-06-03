@@ -1,17 +1,13 @@
 package com.example.fragmentswithnavigation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
+import com.example.fragmentswithnavigation.base.AbsViewBindingFragment
+import com.example.fragmentswithnavigation.databinding.FragmentSecondBinding
 
 
-class SecondFragment : Fragment() {
+class SecondFragment : AbsViewBindingFragment<FragmentSecondBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,19 +17,13 @@ class SecondFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        view?.findViewById<TextView>(R.id.welcomeWithNameTv)?.text =
-            SecondFragmentArgs.fromBundle(arguments).name
-
-        view?.findViewById<Button>(R.id.second_btn)?.setOnClickListener {
+        mViewBinding.welcomeWithNameTv.text = SecondFragmentArgs.fromBundle(requireArguments()).name
+        mViewBinding.secondBtn.setOnClickListener {
             findNavController().navigate(R.id.action_secondFragment_to_homeFragment)
         }
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_second, container, false)
-    }
+    override fun initViewBinding(): FragmentSecondBinding =
+        FragmentSecondBinding.inflate(layoutInflater)
 }

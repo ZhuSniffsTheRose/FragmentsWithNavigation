@@ -1,46 +1,38 @@
 package com.example.fragmentswithnavigation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import androidx.navigation.fragment.findNavController
+import com.example.fragmentswithnavigation.base.AbsViewBindingFragment
+import com.example.fragmentswithnavigation.databinding.FragmentHomeBinding
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : AbsViewBindingFragment<FragmentHomeBinding>() {
+
     private var arg: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arg = requireArguments().getString(ARG)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val enterName = view?.findViewById<EditText>(R.id.enterName)
-        enterName?.hint = arg
-        view?.findViewById<Button>(R.id.home_btn)?.setOnClickListener {
-            val name = enterName?.text.toString()
+        mViewBinding.enterName.hint = arg
+        mViewBinding.homeBtn.setOnClickListener {
+            val name = mViewBinding.enterName.text.toString()
             if (name.isEmpty()) {
-                enterName?.error = "Please enter a name"
+                mViewBinding.enterName.error = "Please enter a name"
             } else {
 
                 val actionHomeFragmentToSecondFragment =
-                    HomeFragmentDirections.actionHomeFragmentToSecondFragment()
-                actionHomeFragmentToSecondFragment.setName(name)
+                    HomeFragmentDirections.actionHomeFragmentToSecondFragment(name)
                 findNavController().navigate(actionHomeFragmentToSecondFragment)
             }
 
         }
     }
+
+    override fun initViewBinding(): FragmentHomeBinding =
+        FragmentHomeBinding.inflate(layoutInflater)
 }
