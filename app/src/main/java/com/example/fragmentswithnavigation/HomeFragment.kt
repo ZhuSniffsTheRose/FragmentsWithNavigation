@@ -11,7 +11,11 @@ import androidx.navigation.fragment.findNavController
 
 
 class HomeFragment : Fragment() {
-
+    private var arg: String? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arg = requireArguments().getString(ARG)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,7 +28,7 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         val enterName = view?.findViewById<EditText>(R.id.enterName)
-
+        enterName?.hint = arg
         view?.findViewById<Button>(R.id.home_btn)?.setOnClickListener {
             val name = enterName?.text.toString()
             if (name.isEmpty()) {
