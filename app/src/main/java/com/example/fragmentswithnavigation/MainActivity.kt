@@ -2,6 +2,8 @@ package com.example.fragmentswithnavigation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.fragmentswithnavigation.databinding.ActivityMainBinding
@@ -25,5 +27,15 @@ class MainActivity : AppCompatActivity() {
         bundle.putString(ARG, "Welcome")
         navController = findNavController(R.id.fragment)
         navController.setGraph(R.navigation.fragments_nav_graph, bundle)
+    }
+
+    fun check(view: View) {
+        supportFragmentManager.fragments.forEach {
+            if (it.isVisible && it is HomeFragment) {
+                Toast.makeText(this, "I'm HomeFragment", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "I'm not HomeFragment", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
