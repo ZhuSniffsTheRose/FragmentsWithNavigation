@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.fragmentswithnavigation.databinding.ActivityMainBinding
 
 const val ARG = "args"
@@ -30,12 +32,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun check(view: View) {
-        supportFragmentManager.fragments.forEach {
-            if (it.isVisible && it is HomeFragment) {
-                Toast.makeText(this, "I'm HomeFragment", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "I'm not HomeFragment", Toast.LENGTH_SHORT).show()
+        if (isForeground(HomeFragment::class.java)) {
+            Toast.makeText(this, "I'm HomeFragment", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "I'm not HomeFragment", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    @Suppress("UNCHECKED_CAST")
+    fun <F : Fragment> isForeground(fragmentClass: Class<F>): Boolean {
+        var currentFragment: Fragment? = null
+        val navHostFragment = this.supportFragmentManager.fragments.first() as NavHostFragment
+        navHostFragment.childFragmentManager.fragments.forEach {
+            if (fragmentClass.isAssignableFrom(it.javaClass)) {
+                currentFragment = it as F
             }
         }
+        return currentFragment != null
     }
 }
